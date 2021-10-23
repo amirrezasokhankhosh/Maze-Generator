@@ -65,12 +65,12 @@ def choose_next_cell(current):
     cells[i_c, j_c].is_current = False
     unvisited = check_neighbours(current)
     if len(unvisited) != 0:
+        stack.append(current)
         next_cell = random.choice(unvisited)
         remove_walls(current, next_cell)
         i, j = next_cell.loc
         cells[i, j].is_current = True
         current = cells[i, j]
-        stack.append(current)
         return True, current
     else:
         
@@ -119,7 +119,6 @@ stack = []
 
 current = cells[0, 0]
 current.is_current = True
-stack.append(current)
 
 
 screen = pygame.display.set_mode((HEIGHT, WIDTH))
