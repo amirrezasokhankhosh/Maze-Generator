@@ -1,16 +1,44 @@
-# This is a sample Python script.
+import pygame
+import sys
+import numpy as np
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+from pygame.locals import KEYDOWN, K_q
+from cell import Cell
 
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+def show_cells():
+    for i in range(ROWS):
+        for j in range(COLS):
+            cells[i, j].show(screen, SIZE)
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+
+HEIGHT, WIDTH = 600, 600
+SIZE = 20
+BLACK = (0, 0, 0)
+WHITE = (255, 255, 255)
+ROWS, COLS = HEIGHT // SIZE, WIDTH // SIZE
+pygame.init()
+
+
+temp = []
+for i in range(ROWS):
+    for j in range(COLS):
+        cell = Cell((i, j))
+        temp.append(cell)
+cells = np.array(temp)
+cells.shape = ROWS, COLS      
+
+
+screen = pygame.display.set_mode((HEIGHT, WIDTH))
+pygame.display.set_caption("Maze Generator")
+screen.fill(BLACK)
+show_cells()
+pygame.display.update()
+
+while True:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            sys.exit()
+        elif event.type == KEYDOWN and event.key == K_q:
+            pygame.quit()
+            sys.exit()
